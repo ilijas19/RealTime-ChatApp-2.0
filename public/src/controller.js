@@ -8,10 +8,14 @@ const loginController = () => {
 
 const chatController = async () => {
   if (window.location.href.includes("/chat")) {
+    const { room } = Qs.parse(location.search, {
+      ignoreQueryPrefix: true,
+    });
+
     const socket = io();
 
     const currentUser = await model.getCurrentUser();
-    // console.log(currentUser);
+    currentUser.room = room;
 
     socket.emit("joinRoom", { currentUser });
   }

@@ -11,8 +11,10 @@ export const loginUser = async function (email, password, room) {
       password,
     });
     alert(result.data.msg);
-    state.currentUser = result.data.tokenUser;
-    window.location.href = "/chat";
+    // state.currentUser = result.data.tokenUser;
+    // state.currentUser.room = room;
+    // console.log("Roo");
+    window.location.href = `/chat?room=${room}`;
   } catch (error) {
     alert(error.response.data);
   }

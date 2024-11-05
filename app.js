@@ -15,7 +15,8 @@ const cookieParser = require("cookie-parser");
 const connectDb = require("./db/connectDb");
 //routers
 const authRouter = require("./routes/authRoutes");
-const navigationRoutes = require("./routes/navigationRoutes");
+const navigationRouter = require("./routes/navigationRoutes");
+const roomRouter = require("./routes/roomRoutes");
 //middlewares
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
@@ -25,12 +26,23 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser(process.env.JWT_SECRET));
 
 app.use("/api/v1/auth", authRouter);
-app.use(navigationRoutes);
+app.use("/api/v1/room", roomRouter);
+app.use(navigationRouter);
 
 app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
+
+const {
+  userJoin,
+  userLeave,
+  getRoomUsers,
+} = require("./controllers/roomController");
+
+const { formatMessage } = require("./utils");
+
+const botName = "APP BOT";
 
 const start = async () => {
   try {
@@ -41,8 +53,19 @@ const start = async () => {
     });
 
     io.on("connection", (socket) => {
-      socket.on("joinRoom", (data) => {
-        console.log(data);
+      socket.on("joinRoom", async (data) => {
+        data.currentUser.socketId = socket.id;
+
+        await userJoin(data.currentUser, data.currentUser.room);
+
+        socket.join(data.currentUser.room);
+
+        //Welcome current user
+        socket.emit("message", formatMessage(botName, "Welcome to Chat Cord"));
+      });
+
+      socket.on("disconnect", async () => {
+        await userLeave(socket.id);
       });
     });
   } catch (error) {

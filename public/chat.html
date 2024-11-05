@@ -33,7 +33,7 @@
           <p class="message-text">Welcome to chat cord</p>
         </div>
       </section>
-      <form action="" class="message-form">
+      <form action="" id="chat-form" class="message-form">
         <input
           type="text"
           placeholder="Enter Message"
@@ -43,6 +43,12 @@
         <button class="send-message-btn" type="submit">Send</button>
       </form>
     </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.13.0/qs.min.js"
+      integrity="sha512-LGi3LadLxI4NfDCsvTQ+Ps8dmV3PK7QUNFMEPyqpfFI78fu9YUXPRRVHIOH9xS5OLz035SSTH2Mc2Tzau+l7BA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="src/controller.js"></script>
