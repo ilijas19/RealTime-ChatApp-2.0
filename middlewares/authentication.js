@@ -1,9 +1,14 @@
 const { StatusCodes } = require("http-status-codes");
 const Token = require("../model/Token");
 const { verifyJwt } = require("../utils/index");
+const CustomError = require("../errors");
 
 const authorizePermission = (...roles) => {
-  return async (req, res, next) => {};
+  return async (req, res, next) => {
+    if (req.user.role === "admin") return next();
+    if (roles.includes(req.user.role)) return next();
+    throw new CustomError.UnauthorizedError("Not authorized to use this route");
+  };
 };
 
 const authenticateUser = async (req, res, next) => {
