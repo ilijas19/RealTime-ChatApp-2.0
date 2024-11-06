@@ -6,6 +6,8 @@
 
 -User authentication is handled with cookies so for best testing expirience best to open second browser tab in another browser or incognito tab because on reload cookies may be overwritten.
 
+-Look at accounts.txt for dummy accounts created...
+
 ## CHAT APP USING SOCKET IO
 
 FOR TESTING PURPOSE ALL EMAILS ARE AUTOMATICLY VERIFIED AND THERE IS NO NEED TO CHECK EMAIL FOR VERIFICATION LINK...
@@ -27,3 +29,4 @@ FOR TESTING PURPOSE ALL EMAILS ARE AUTOMATICLY VERIFIED AND THERE IS NO NEED TO 
 -Blocking users
 
 -more....
+
