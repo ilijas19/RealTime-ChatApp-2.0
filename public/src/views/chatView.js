@@ -6,6 +6,25 @@ class ChatView {
   _usersList = document.querySelector(".users-list");
   _usernameField = document.querySelector(".username-field");
   _logoutButton = document.querySelector(".logout-button");
+  _menuButton = document.querySelector(".menu-button");
+  _aside = document.querySelector(".aside");
+  _closeMenuButton = document.querySelector(".close-menu-btn");
+
+  addMenuBtnListeners() {
+    this._menuButton.addEventListener("click", () => {
+      this._aside.style.left = 0;
+      this._aside.style.width = "100%";
+      this._logoutButton.style.opacity = 1;
+      this._logoutButton.style.pointerEvents = "auto";
+    });
+    this._closeMenuButton.addEventListener("click", () => {
+      this._aside.style.left = "-50rem";
+      this._aside.style.width = "0%";
+
+      this._logoutButton.style.opacity = 0;
+      this._logoutButton.style.pointerEvents = "none";
+    });
+  }
 
   addChatFormListeners(socket, currentUser) {
     this._chatForm.addEventListener("submit", (e) => {
@@ -43,6 +62,7 @@ class ChatView {
     `;
 
     this._chatMessages.insertAdjacentHTML("beforeend", message);
+    this._chatMessages.scrollTo(0, this._chatMessages.scrollHeight);
   }
 
   renderRoomName(room) {

@@ -64,3 +64,15 @@ label {
   color: #ddd;
   margin-top: 1rem;
 }
+
+@media (max-width: 550px) {
+  .form-div {
+    padding: 2rem 10rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .form-div {
+    padding: 2rem 7rem;
+  }
+}

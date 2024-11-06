@@ -179,3 +179,86 @@ body {
   color: #e8590c !important;
   font-weight: 500;
 }
+.menu-button {
+  display: none;
+}
+.close-menu-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 520px) {
+  body {
+    background-color: #2d3632;
+  }
+  .main {
+    background-color: #2d3632;
+    border: 1px solid #ddd;
+    max-width: 90rem;
+    margin: 0 auto;
+    margin-top: 0rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    height: 100vh;
+  }
+  .message-container {
+    height: 50rem;
+    border: none;
+  }
+
+  .logout-button {
+    position: absolute;
+    z-index: 99999999999;
+    transition: all 0.6s;
+    opacity: 0;
+    pointer-events: none;
+    /* display: none; */
+  }
+  .menu-button {
+    display: block;
+    font-weight: 500;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    background-color: #2d3b33;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    color: #ddd;
+  }
+  .message-form {
+    margin-top: auto;
+  }
+
+  .aside {
+    position: relative;
+    transition: all 0.5s;
+    position: absolute;
+    background-color: red;
+    height: 100%;
+    width: 100%;
+    left: -50rem;
+    background-color: #2d3632;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #ddd;
+  }
+  .close-menu-btn {
+    margin-left: auto;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    display: block;
+    font-weight: 500;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    background-color: #2d3b33;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    color: #ddd;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .message-container {
+    grid-column: 1/-1;
+  }
+}

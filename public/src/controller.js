@@ -37,6 +37,8 @@ const chatController = async () => {
 
     //logout
     chatView.addLogoutButtonListener(model.logoutUser);
+
+    chatView.addMenuBtnListeners();
   }
 };
 
