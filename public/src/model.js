@@ -16,7 +16,7 @@ export const loginUser = async function (email, password, room) {
     // console.log("Roo");
     window.location.href = `/chat?room=${room}`;
   } catch (error) {
-    alert(error.response.data);
+    alert(error.response.data.msg);
   }
 };
 
