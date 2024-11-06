@@ -34,6 +34,9 @@ const chatController = async () => {
     socket.on("message", (message) => {
       chatView.renderMessage(message, currentUser);
     });
+
+    //logout
+    chatView.addLogoutButtonListener(model.logoutUser);
   }
 };
 

@@ -5,6 +5,7 @@ class ChatView {
   _roomName = document.querySelector(".room-name");
   _usersList = document.querySelector(".users-list");
   _usernameField = document.querySelector(".username-field");
+  _logoutButton = document.querySelector(".logout-button");
 
   addChatFormListeners(socket, currentUser) {
     this._chatForm.addEventListener("submit", (e) => {
@@ -19,6 +20,13 @@ class ChatView {
       });
       this._messageInput.value = "";
       this._messageInput.focus();
+    });
+  }
+
+  addLogoutButtonListener(handler) {
+    this._logoutButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      handler();
     });
   }
 

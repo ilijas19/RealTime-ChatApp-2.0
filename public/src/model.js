@@ -44,3 +44,9 @@ export const getCurrentUser = async function () {
     console.log(error);
   }
 };
+
+export const logoutUser = async function () {
+  await axios.delete(`${origin}/api/v1/auth/logout`);
+  alert("Logout Successfull... Transition to login...");
+  window.location.href = "/";
+};
