@@ -2,7 +2,7 @@ const Room = require("../model/Room");
 const CustomError = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
-const users = [];
+let users = [];
 
 //for postman
 const createRoom = async (req, res) => {
@@ -22,41 +22,46 @@ const deleteRoom = async (req, res) => {
 
 //backend (for socket.io)
 const userJoin = async (user, roomName) => {
-  const room = await Room.findOne({ name: roomName });
-  if (!room) {
-    throw new CustomError.NotFoundError("No room found");
-  }
-  const isUserInRoom = room.users.some(
-    (userId) => userId.toString() === user.userId
-  );
-  if (!isUserInRoom) {
-    room.users.push(user.userId);
-    await room.save();
-    users.push(user);
-  }
-  // if (true) {
-  //   // room.users.push(user.userId);
-  //   // await room.save();
-  //   users.push(user);
-  //   console.log(users, "userjoin");
+  //ADDING TO ROOM IN DATABASE(FOR FUTURE IMPLEMENTATIONS)
+  // const room = await Room.findOne({ name: roomName });
+  // if (!room) {
+  //   throw new CustomError.NotFoundError("No room found");
   // }
+  // const isUserInRoom = room.users.some(
+  //   (userId) => userId.toString() === user.userId
+  // );
+  // if (!isUserInRoom) {
+  //   room.users.push(user.userId);
+  //   await room.save();
+  //   users.push(user);
+  // }
+
+  //ADING TO USERS ARRAY
+  users.push(user);
 };
 
 const userLeave = async (socketId, roomName) => {
   const user = users.find((user) => user.socketId === socketId);
-
-  const room = await Room.findOne({ name: user.room });
-  if (!room) {
-    throw new CustomError.NotFoundError("No room found");
-  }
-  room.users = room.users.filter((userId) => userId.toString() !== user.userId);
-  await room.save();
+  //REMOVING USER FROM DATABASE(FOR FUTURE IMPLEMENTATIONS)
+  // const room = await Room.findOne({ name: user.room });
+  // if (!room) {
+  //   throw new CustomError.NotFoundError("No room found");
+  // }
+  // room.users = room.users.filter((userId) => userId.toString() !== user.userId);
+  // await room.save();
+  users = users.filter((user) => user.socketId !== socketId);
+  return user;
   // console.log(user, userLeave);
 };
 
-const getRoomUsers = async (roomName) => {
-  const room = await Room.findOne({ name: roomName });
-  return room ? room.users : [];
-};
+// const getRoomUsers = async (roomName) => {
+//   const room = await Room.findOne({ name: roomName });
+//   return room ? room.users : [];
+// };
+
+//get room users
+function getRoomUsers(room) {
+  return users.filter((user) => user.room === room);
+}
 
 module.exports = { createRoom, deleteRoom, userJoin, userLeave, getRoomUsers };
