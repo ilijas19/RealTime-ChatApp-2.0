@@ -171,3 +171,11 @@ body {
   font-size: 1.6rem;
   color: #d3d1d1;
 }
+.cBlack {
+  color: black !important;
+  font-weight: 500;
+}
+.cOrange {
+  color: #e8590c !important;
+  font-weight: 500;
+}
