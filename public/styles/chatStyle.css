@@ -199,10 +199,10 @@ body {
     margin-top: 0rem;
     display: grid;
     grid-template-columns: 1fr;
-    border-bottom: none;
+    /* border-bottom: none; */
     border-left: none;
     border-right: none;
-    height: 100vh;
+    height: 90vh;
   }
   .message-container {
     height: 50rem;
