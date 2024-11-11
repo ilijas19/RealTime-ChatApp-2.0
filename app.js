@@ -38,6 +38,7 @@ const {
   userJoin,
   userLeave,
   getRoomUsers,
+  findUserSocketId,
 } = require("./controllers/roomController");
 
 const { formatMessage } = require("./utils");
@@ -51,6 +52,8 @@ const start = async () => {
     server.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}`);
     });
+
+    const messages = {}; // Stores message history for each pair
 
     io.on("connection", (socket) => {
       socket.on("joinRoom", async (data) => {
@@ -75,26 +78,52 @@ const start = async () => {
             )
           );
 
-        //send user and room info
+        //SEND USER AND ROOM INFO
         io.to(data.currentUser.room).emit("roomUsers", {
           room: data.currentUser.room,
           users: getRoomUsers(data.currentUser.room),
         });
 
-        //recieve message from client
+        //RECIEVING PUBLIC MESSAGES FROM CLIENT
         socket.on("chatMessage", (data) => {
           const user = data.user;
-          //server recieved message from client msg form and emits to all users
+          //-server recieved message from client msg form and emits to all users
           io.to(user.room).emit(
             "message",
             formatMessage(user.username, data.msg)
           );
         });
+
+        //RECIEVING PRIVATE MESSAGE
+        socket.on("sentPrivateMessage", (data) => {
+          const { to, from, msg } = data;
+          const time = new Date().toLocaleTimeString();
+          const conversationKey = [from, to].sort().join("-");
+          // console.log(conversationKey);
+          if (!messages[conversationKey]) {
+            messages[conversationKey] = [];
+          }
+          messages[conversationKey].push({ from, to, msg, time });
+
+          const receiverSocketId = findUserSocketId(to);
+          io.to(receiverSocketId).emit("recievedPrivateMessage", {
+            from,
+            msg,
+            time,
+          });
+          io.to(socket.id).emit("recievedPrivateMessage", { from, msg, time });
+        });
+      });
+
+      //FETCH MESSAGE HISTORY FOR A USER PAIR
+      socket.on("fetchMessageHistory", ({ user1, user2 }) => {
+        const conversationKey = [user1, user2].sort().join("-");
+        const messageHistory = messages[conversationKey] || [];
+        io.to(socket.id).emit("messageHistory", messageHistory);
       });
 
       socket.on("disconnect", async () => {
         const user = await userLeave(socket.id);
-
         io.to(user.room).emit(
           "message",
           formatMessage(botName, `${user.username} has left the chat`)

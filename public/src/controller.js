@@ -17,24 +17,44 @@ const chatController = async () => {
 
     const currentUser = await model.getCurrentUser();
     currentUser.room = room;
-    //emmit current user to server on connection
+
+    //JOINING
     socket.emit("joinRoom", { currentUser });
 
-    //get room and users
+    //GETTING ROOM AND USERS
     socket.on("roomUsers", (data) => {
       chatView.renderRoomName(data.room);
-      chatView.renderUsers(data.users, currentUser);
+      chatView.renderUsers(data.users, currentUser, socket);
       chatView.renderUsername(currentUser.username);
     });
 
-    //sending message
+    //SENDING MESSAGES
     chatView.addChatFormListeners(socket, currentUser);
 
-    //messages from server
+    //RECIEVING MESSAGES FROM SERVER
     socket.on("message", (message) => {
       chatView.renderMessage(message, currentUser);
     });
 
+    //SENDING PRIVATE MESSAGES
+    chatView.addPopupFormListener(socket);
+
+    //RECIEVING PRIVATE MESSAGES AND RENDERING THEM IN ACTIVE POPUP
+    socket.on("recievedPrivateMessage", (formattedMessage) => {
+      chatView._renderPrivateMessage(formattedMessage);
+    });
+
+    // Fetching message history for a specific user
+    socket.on("messageHistory", (history) => {
+      // console.log(history, "HISTORY");
+      chatView._popupMessageContainer.innerHTML = ""; // Clear previous messages
+      history.forEach((message) => {
+        chatView._renderPrivateMessage(message);
+      });
+    });
+
+    //closing popup
+    chatView.addClosePopupListener();
     //logout
     chatView.addLogoutButtonListener(model.logoutUser);
 
@@ -42,6 +62,10 @@ const chatController = async () => {
   }
 };
 
+const popupController = async () => {};
+
 loginController();
 
 chatController();
+
+popupController();

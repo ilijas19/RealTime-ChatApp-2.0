@@ -64,4 +64,16 @@ function getRoomUsers(room) {
   return users.filter((user) => user.room === room);
 }
 
-module.exports = { createRoom, deleteRoom, userJoin, userLeave, getRoomUsers };
+const findUserSocketId = (username) => {
+  const user = users.find((user) => user.username === username);
+  return user.socketId;
+};
+
+module.exports = {
+  createRoom,
+  deleteRoom,
+  userJoin,
+  userLeave,
+  getRoomUsers,
+  findUserSocketId,
+};

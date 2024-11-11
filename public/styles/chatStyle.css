@@ -129,7 +129,9 @@ body {
   border-radius: 10px;
   border: 2px solid #313a37;
 }
-
+.user {
+  cursor: pointer;
+}
 /* message container */
 
 .message-container {
@@ -261,4 +263,93 @@ body {
   .message-container {
     grid-column: 1/-1;
   }
+}
+
+.popup-div {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  height: 55rem;
+  width: 45rem;
+  background-color: #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #2d3632;
+  border: 3px solid #ddd;
+  opacity: 0;
+  pointer-events: none;
+}
+.popup-chat {
+  overflow-y: scroll;
+  height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #616d66 #313a37;
+}
+.popup-title {
+  background-color: #2d3632;
+  padding: 0.5rem;
+  text-align: center;
+  color: #ddd;
+  font-size: 1.8rem;
+  border-bottom: 3px solid #ddd;
+}
+
+.popup-message-form {
+  margin-top: auto;
+}
+.popup-message-div {
+  border: 2px solid #2d3632;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+}
+.popup-message-info {
+  font-size: 1.4rem;
+  font-weight: bold !important;
+  color: #fff;
+}
+.popup-message-info span {
+  font-size: 1.6rem;
+}
+.popup-message {
+  color: #ddd;
+  font-size: 1.4rem;
+}
+.popup-message-form {
+  border-top: 2px solid #ddd;
+  width: 100%;
+  display: flex;
+}
+
+.popup-message-input {
+  flex-grow: 1;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1.6rem;
+  padding: 0.3rem;
+}
+.popup-send-button {
+  background-color: transparent;
+  color: #ddd;
+  font-size: 1.5rem;
+  padding: 0.2rem;
+  border: none;
+  border-left: 2px solid #ddd;
+}
+.popup-close-btn {
+  position: absolute;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  border-left: 2px solid #ddd;
+  padding: 0.3rem;
+  color: rgb(192, 18, 18);
+  font-weight: bold;
+  cursor: pointer;
 }

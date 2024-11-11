@@ -2,6 +2,7 @@ import { ORIGIN } from "./utils.js";
 
 export const state = {
   currentUser: {},
+  activeChatPartner: null,
 };
 
 export const loginUser = async function (email, password, room) {
