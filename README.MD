@@ -8,7 +8,7 @@
 
 -Look at accounts.txt for dummy accounts created...
 
--PRIVATE CHAT IS TRIGGERED BY CLICKING ON ACTIVE USER NAME
+-PRIVATE CHAT IS TRIGGERED BY CLICKING ON ACTIVE USER NAME(not responsible yet)
 
 ## CHAT APP USING SOCKET IO
 
