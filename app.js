@@ -112,6 +112,11 @@ const start = async () => {
             time,
           });
           io.to(socket.id).emit("recievedPrivateMessage", { from, msg, time });
+          //--notification
+
+          io.to(receiverSocketId).emit("recievedNotification", {
+            from,
+          });
         });
       });
 

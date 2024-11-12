@@ -44,6 +44,10 @@ const chatController = async () => {
       chatView._renderPrivateMessage(formattedMessage);
     });
 
+    //RECIEVING NOTIFICATION FOR MESSAGE
+    socket.on("recievedNotification", (data) => {
+      chatView.renderNotification(data.from);
+    });
     // Fetching message history for a specific user
     socket.on("messageHistory", (history) => {
       // console.log(history, "HISTORY");

@@ -28,7 +28,7 @@ class ChatView {
       this._logoutButton.style.pointerEvents = "auto";
     });
     this._closeMenuButton.addEventListener("click", () => {
-      this._aside.style.left = "-50rem";
+      this._aside.style.left = "-55rem";
       this._aside.style.width = "0%";
 
       this._logoutButton.style.opacity = 0;
@@ -106,6 +106,7 @@ class ChatView {
   renderUsername(username) {
     this._usernameField.textContent = username;
   }
+
   //OPENING POPUP
   _openPrivateChat(username, socket) {
     this._activeChatPartner = username;
@@ -155,6 +156,7 @@ class ChatView {
 
   //--function to render private messages
   _renderPrivateMessage(formattedMessage) {
+    //to prevent messages from other users in private chat
     if (
       formattedMessage.to === this._activeChatPartner ||
       formattedMessage.from === this._activeChatPartner
@@ -182,6 +184,19 @@ class ChatView {
     this._closePopupBtn.addEventListener("click", () => {
       this._chatPopup.style.opacity = 0;
       this._chatPopup.style.pointerEvents = "none";
+    });
+  }
+
+  renderNotification(username) {
+    const notificationEls = Array.from(
+      document.querySelectorAll(".user")
+    ).filter((user) => user.textContent === username);
+
+    notificationEls.forEach((el) => {
+      el.classList.add("notification");
+      el.addEventListener("click", () => {
+        el.classList.remove("notification");
+      });
     });
   }
 }
